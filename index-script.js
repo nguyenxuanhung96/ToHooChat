@@ -6,10 +6,14 @@ window.onload = () => {
   console.log(firebase.app().name);
 }
 
-var currentUsername = 'nguyenxuan.hung96@gmail.com';
+var currentUsername;
 
 function sendMessage($event) {
   if ($event.keyCode === 13) {
+    if(!currentUsername){
+      alert('Select acc first!');
+      return;
+    }
     let m = {
       createBy: currentUsername,
       createAt: new Date().toISOString(),

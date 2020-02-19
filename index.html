@@ -17,8 +17,15 @@
       <option value="nguyenxuan.hung96@gmail.com">HungIT</option>
       <option value="thunguyen94.bg@gmail.com">ThuThinh</option>
     </select>
+    <div>
+      <label class="switch">
+        <input type="checkbox" checked onclick="$('.chatbox__user-list').slideToggle();">
+        <span class="slider round"></span>
+      </label>
+    </div>
     <div class='chatbox'>
-      <div class='chatbox__user-list'>
+      <div class="chatbox__user-list-show animated" onclick="$('.chatbox__user-list').slideToggle(); $(this).addClass('fadeOutUp').removeClass('fadeInDown').toggle();">Show</div>
+      <div class='chatbox__user-list' onclick="$(this).slideToggle(); $('.chatbox__user-list-show').addClass('fadeInDown').removeClass('fadeOutUp').toggle()">
         <h1>Conversations</h1>
         <div class="chatbox_conversations">
         </div>
