@@ -11,30 +11,16 @@
 </head>
 
 <body>
-  <div class='container' ng-cloak ng-app="chatApp">
-    <h1>Angular Messenger App</h1>
+  <div class='container'>
     <select class="form-control mb-3" onchange="selectUser(this)" style="max-width: 350px;">
       <option value="">--- Select user ---</option>
       <option value="nguyenxuan.hung96@gmail.com">HungIT</option>
       <option value="thunguyen94.bg@gmail.com">ThuThinh</option>
     </select>
-    <div class='chatbox' ng-controller="MessageCtrl as chatMessage">
+    <div class='chatbox'>
       <div class='chatbox__user-list'>
-        <h1>Friends Online</h1>
-        <div class='chatbox__user--active'>
-          <p>Maelyn Pepe</p>
-        </div>
-        <div class='chatbox__user--busy'>
-          <p>Michelle Pepe</p>
-        </div>
-        <div class='chatbox__user--active'>
-          <p>Amy Angular</p>
-        </div>
-        <div class='chatbox__user--active'>
-          <p>Jack Uniden</p>
-        </div>
-        <div class='chatbox__user--away'>
-          <p>Ben Marcus</p>
+        <h1>Conversations</h1>
+        <div class="chatbox_conversations">
         </div>
       </div>
       <div class="chat-content">
