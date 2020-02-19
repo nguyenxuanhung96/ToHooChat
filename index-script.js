@@ -30,7 +30,7 @@ function addMessage(message) {
 
 function addOutcomeMessage(message) {
   $('#chat-window').append(`
-    <div class="chatbox__messages outcome-message animated fadeIn">
+    <div class="chatbox__messages outcome-message animated fadeIn d-flex flex-row-reverse">
       <div class="chatbox__messages__user-message">
         <div class="chatbox__messages__user-message--ind-message" title="${formatDatetime(message.createAt)}">
           <p class="message">${message.content}</p>
@@ -43,7 +43,7 @@ function addOutcomeMessage(message) {
 }
 function addIncomeMessage(message) {
   $('#chat-window').append(`
-    <div class="chatbox__messages income-message">
+    <div class="chatbox__messages income-message animated fadeIn">
       <div class="chatbox__messages__user-message">
         <div class="chatbox__messages__user-message--ind-message" title="${formatDatetime(message.createAt)}">
           <p class="name">${message.createBy}</p>
