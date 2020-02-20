@@ -20,7 +20,6 @@ $('#form-info').submit(async function (e) {
       window.location.href = '../index.html';
     }
   }catch(error){
-    console.log(error);
     alert(error.message);
   }
 })
