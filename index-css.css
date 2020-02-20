@@ -124,22 +124,23 @@ html, body {
   text-align: center;
 }
 
-.chatbox__user, .chatbox__user--active, .chatbox__user--busy, .chatbox__user--away {
+.chatbox__user, .chatbox__user.active, .chatbox__user.busy, .chatbox__user.away {
   width: 0.5em;
   height: 0.5em;
   border-radius: 100%;
   margin: 1em 0.7em;
+  cursor: pointer;
 }
 
-.chatbox__user--active {
+.chatbox__user.active {
   background: rgba(23, 190, 187, 0.8);
 }
 
-.chatbox__user--busy {
+.chatbox__user.busy {
   background: rgba(252, 100, 113, 0.8);
 }
 
-.chatbox__user--away {
+.chatbox__user.away {
   background: rgba(255, 253, 130, 0.8);
 }
 
