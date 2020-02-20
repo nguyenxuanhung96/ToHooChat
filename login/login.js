@@ -1,4 +1,11 @@
 
+if(localStorage.getItem('currentUser')){
+  let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  if(currentUser.email){
+    window.location.href = '../';
+  }
+}
+
 $('#form-info').submit(async function (e) {
   e.preventDefault();
 
@@ -17,7 +24,7 @@ $('#form-info').submit(async function (e) {
         displayName: loginResult.user.displayName,
         email: loginResult.user.email,
       }));
-      window.location.href = '../index.html';
+      window.location.href = '../';
     }
   }catch(error){
     alert(error.message);

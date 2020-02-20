@@ -12,7 +12,7 @@ if(localStorage.getItem('currentUser')){
   loadConversation();
 }else{
   alert('Login first');
-  window.location.href = 'login/index.html';
+  window.location.href = 'login';
 }
 
 function sendMessage($event) {

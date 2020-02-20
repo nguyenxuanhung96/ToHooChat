@@ -17,9 +17,8 @@ $('#form-info').submit(async function (e) {
     });
     firebase.auth().currentUser.sendEmailVerification();
     alert("Success");
+    window.location.href = '../login'
   } catch (error) {
     alert(error.message);
   }
-
-
 });
