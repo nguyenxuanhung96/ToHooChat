@@ -5,8 +5,15 @@ var activedConversation;
 window.onload = () => {
   console.log(firebase.app().name);
 }
-
-var currentUsername;
+var currentUser, currentUsername;
+if(localStorage.getItem('currentUser')){
+  currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  currentUsername = currentUser.email;
+  loadConversation();
+}else{
+  alert('Login first');
+  window.location.href = 'login/index.html';
+}
 
 function sendMessage($event) {
   if ($event.keyCode === 13) {
@@ -152,13 +159,6 @@ function reloadConversation() {
 function activeUIActiveConversation(){
   $('.chatbox_conversations .chatbox__user').removeClass('active');
   $(`.chatbox_conversations .chatbox__user[ref="${activedConversation.id}"]`).addClass('active');
-}
-
-function selectUser(target) {
-  if (target.value) {
-    currentUsername = target.value;
-    loadConversation();
-  }
 }
 
 $('.input-message input').focus();
