@@ -90,7 +90,7 @@ function addConversations(conversations) {
               <div class="d-flex align-items-center justify-content-between mb-1">
                 <h6 class="mb-0">${c.name}</h6><small class="small font-weight-bold">25 Dec</small>
               </div>
-              <p class="font-italic mb-0 text-small">Lorem ipsum dolor sit amet</p>
+              <p class="font-italic mb-0 text-small">${c.members.length} member(s)</p>
             </div>
           </div>
         </a>
