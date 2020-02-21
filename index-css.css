@@ -1,270 +1,58 @@
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Nunito', sans-serif;
-}
-html, body {
-  background: -webkit-linear-gradient(330deg, #000, #f0a6ca);
-  background: linear-gradient(120deg, #000, #f0a6ca);
-  overflow: hidden;
+body {
+  background-color: #74EBD5;
+  background-image: linear-gradient(90deg, #74EBD5 0%, #9FACE6 100%);
+
+  min-height: 100vh;
 }
 
-.container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  height: 106vh;
-  width: 100vw;
+::-webkit-scrollbar {
+  width: 5px;
 }
 
-.container h1 {
-  margin: 0.5em auto;
-  color: #FFF;
-  text-align: center;
+::-webkit-scrollbar-track {
+  width: 5px;
+  background: #f5f5f5;
 }
 
-.chatbox {
-  background: rgba(255, 255, 255, 0.05);
-  width: 100%;
-  height: 75%;
-  border-radius: 0.2em;
-  position: relative;
-  box-shadow: 1px 1px 12px rgba(0, 0, 0, 0.1);
-  display: flex;
+::-webkit-scrollbar-thumb {
+  width: 1em;
+  background-color: #ddd;
+  outline: 1px solid slategrey;
+  border-radius: 1rem;
 }
 
-.chatbox__messages.outcome-message .chatbox__messages__user-message--ind-message {
-  float: right;
-}
-/* 
-.chatbox__messages.outcome-message .chatbox__messages__user-message--ind-message:after {
-  content: '';
-  position: absolute;
-  margin: -1.5em -17.06em;
-  width: 0;
-  height: 0;
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
-  border-right: 10px solid rgba(255, 255, 255, 0.2);
-} */
-
-.chatbox__messages.income-message .chatbox__messages__user-message--ind-message {
-  float: left;
-}
-/* 
-.chatbox__messages.income-message .chatbox__messages__user-message--ind-message:after {
-  content: '';
-  position: absolute;
-  margin: -1.5em 1.87em;
-  width: 0;
-  height: 0;
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
-  border-left: 10px solid rgba(255, 255, 255, 0.2);
-} */
-
-.chatbox__messages__user-message {
-  width: 100%;
+.text-small {
+  font-size: 0.9rem;
 }
 
-.chatbox__messages__user-message--ind-message {
-  background: rgba(255, 255, 255, 0.2);
-  padding: 1em 0;
-  height: auto;
-  width: 45%;
-  border-radius: 5px;
-  margin: 1em 1em;
-  overflow: auto;
+.messages-box,
+.chat-box {
+  height: 72vh;
+  overflow-y: scroll;
+}
+.chat-box{
+  padding-bottom: 6rem !important;
 }
 
-.chatbox__messages__user-message--ind-message > p.name {
-  color: #FFF;
-  font-size: 0.7em;
+.rounded-lg {
+  border-radius: 0.5rem;
 }
 
-.chatbox__messages__user-message--ind-message > p.message {
-  color: #FFF;
-  font-size: 1em;
-  margin: 0 1.2em;
-  word-wrap: break-word;
+input::placeholder {
+  font-size: 0.9rem;
+  color: #999;
 }
-
-.chatbox__user-list {
-  background: rgba(255, 255, 255, 0.1);
-  width: 25%;
-  height: 100%;
-  float: right;
-  border-top-right-radius: 0.2em;
-  border-bottom-right-radius: 0.2em;
-  flex: 1;
+.list-group-item-light{
+  color: #818182 !important;
 }
-.chat-content{
-  flex: 2;
-  position: relative;
-}
-.chatbox__user-list h1 {
-  background: rgba(255, 255, 255, 0.05);
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 0.9em;
-  padding: 1em;
-  margin: 0;
-  font-weight: 300;
-  text-align: center;
-}
-
-.chatbox__user, .chatbox__user.active, .chatbox__user.busy, .chatbox__user.away {
-  width: 0.5em;
-  height: 0.5em;
-  border-radius: 100%;
-  margin: 1em 0.7em;
+.list-group-item:not(.active){
   cursor: pointer;
 }
-
-.chatbox__user.active {
-  background: rgba(23, 190, 187, 0.8);
+p{
+  word-break: break-all;
 }
-
-.chatbox__user.busy {
-  background: rgba(252, 100, 113, 0.8);
-}
-
-.chatbox__user.away {
-  background: rgba(255, 253, 130, 0.8);
-}
-
-.chatbox p {
-  float: left;
-  text-align: left;
-  margin: -0.25em 2em;
-  font-size: 0.7em;
-  font-weight: 300;
-  color: #FFF;
-  width: 200px;
-}
-
-.chatbox .input-message {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-}
-
-.chatbox .input-message input {
-  background: rgba(255, 255, 255, 0.03);
-  border: none;
-  padding: 1.2em;
-  outline: none;
-  width: 100%;
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 300;
-  word-wrap: break-word;
-}
-
-.chatbox .input-message input::placeholder {
-  color: rgba(255, 255, 255, 0.9);
-  opacity: 0.5;
-}
-
-.clear-float{
-  clear: both;
-}
-#chat-window{
-  overflow: overlay;
-  height: calc(100% - 61px);
-  padding-bottom: 150px;
-}
-#chat-window::-webkit-scrollbar {
-  width: 6px;
-  background-color: #F5F5F5;
-} 
-#chat-window::-webkit-scrollbar-thumb {
-  background-color: #6e4f5f;
-  border-radius: 10px;
-}
-#chat-window::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-  background-color: #c488a5;
-}
-
-.chatbox__user-list-show{
-  position: absolute;
-  top: 0;
-  left: 0;
-  color: #fff;
-  display: none;
-  z-index: 1000;
-}
-/* The switch - the box around the slider */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 43px;
-  height: 18px;
-}
-
-/* Hide default HTML checkbox */
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-/* The slider */
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 16px;
-  width: 16px;
-  left: 1px;
-  bottom: 1px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-input:checked + .slider {
-  background-color: #2196F3;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
+.navbar, .navbar-brand{
+  padding-top: 0;
+  padding-bottom: 0;
 }

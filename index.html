@@ -6,38 +6,81 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ToHoo Chat</title>
   <link rel="shortcut icon" href="icon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="venders/fontawesome-free-5.12.1-web/css/all.min.css">
   <link rel="stylesheet" href="animate.css">
   <link rel="stylesheet" href="index-css.css">
 </head>
 
 <body>
-  <div class='container'>
-    <div>
-      <label class="switch">
-        <input type="checkbox" checked onclick="$('.chatbox__user-list').slideToggle();">
-        <span class="slider round"></span>
-      </label>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">
+      <img src="icon.png" width="55" height="55" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user"></i> Hi <span id="userDisplayName"></span>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">View profile</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/logout">Logout</a>
+          </div>
+        </li>
+      </ul>
     </div>
-    <div class='chatbox'>
-      <div class='chatbox__user-list'>
-        <h1>Conversations</h1>
-        <div class="chatbox_conversations">
+  </nav>
+
+  <div class="container py-5 px-4">
+    <!-- For demo purpose-->
+    <div class="row rounded-lg overflow-hidden shadow">
+      <!-- Users box-->
+      <div class="col-3 px-0">
+        <div class="bg-white">
+  
+          <div class="bg-gray px-4 py-2 bg-light">
+            <p class="h5 mb-0 py-1">Conversations</p>
+          </div>
+  
+          <div class="messages-box">
+            <div class="list-group rounded-0 chatbox_conversations">
+            </div>
+          </div>
         </div>
       </div>
-      <div class="chat-content">
-        <div id="chat-window">
+      <!-- Chat Box-->
+      <div class="col-9 px-0">
+        <div class="px-4 py-5 chat-box bg-white" id="chat-window">
         </div>
-        <div class="input-message">
-          <input type="text" placeholder="Type Message" onkeyup="sendMessage(event);">
-        </div>
+  
+        <!-- Typing area -->
+        <form id="frmSendMessage" class="bg-light">
+          <div class="input-group">
+            <input type="text" id="inputMessage" autocomplete="off" placeholder="Type a message" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
+            <div class="input-group-append">
+              <button id="button-addon2" type="submit" class="btn btn-link"> <i class="fa fa-paper-plane"></i></button>
+            </div>
+          </div>
+        </form>
+  
       </div>
     </div>
   </div>
-
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="/venders/sweetalert.min.js"></script>
+  <script src="sweetAlertFactory.js"></script>
   <script src="moment.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
   <script src="initializeFirebase.js"></script>

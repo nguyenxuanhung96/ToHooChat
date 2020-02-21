@@ -6,7 +6,7 @@ $('#form-info').submit(async function (e) {
   let conPass = this.elements['inputConPassword'].value;
   let name = this.elements['inputName'].value;
   if (pass != conPass) {
-    alert("Password not matched");
+    sweetAlertF.warning("Password not matched");
     return;
   }
 
@@ -16,9 +16,11 @@ $('#form-info').submit(async function (e) {
       displayName: name,
     });
     firebase.auth().currentUser.sendEmailVerification();
-    alert("Success");
-    window.location.href = '../login'
+    sweetAlertF.success("Register successfully! Please check email to confirm.")
+    .then(() => {
+      window.location.href = '../login'
+    })
   } catch (error) {
-    alert(error.message);
+    sweetAlertF.error(error.message);
   }
 });

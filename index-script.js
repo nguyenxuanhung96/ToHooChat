@@ -6,30 +6,28 @@ window.onload = () => {
   console.log(firebase.app().name);
 }
 var currentUser, currentUsername;
-if(localStorage.getItem('currentUser')){
+if (localStorage.getItem('currentUser')) {
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   currentUsername = currentUser.email;
+  $('#userDisplayName').html(currentUser.displayName);
   loadConversation();
-}else{
-  alert('Login first');
+} else {
+  sweetAlertF.error('You need login first!');
   window.location.href = 'login';
 }
 
-function sendMessage($event) {
-  if ($event.keyCode === 13) {
-    if (!currentUsername) {
-      alert('Select acc first!');
-      return;
-    }
+$('#frmSendMessage').submit(function (e) {
+  e.preventDefault();
+  if (this.elements['inputMessage'].value) {
     let m = {
       createBy: currentUsername,
       createAt: new Date().toISOString(),
-      content: $event.target.value,
+      content: this.elements['inputMessage'].value,
     };
     sendToDB(m);
-    $event.target.value = "";
+    this.elements['inputMessage'].value = "";
   }
-}
+})
 
 function addMessage(message) {
   if (message.createBy === currentUsername) {
@@ -39,36 +37,37 @@ function addMessage(message) {
   }
 }
 
-function addOutcomeMessage(message) {
+function addIncomeMessage(message) {
   $('#chat-window').append(`
-    <div class="chatbox__messages outcome-message animated fadeIn d-flex flex-row-reverse">
-      <div class="chatbox__messages__user-message">
-        <div class="chatbox__messages__user-message--ind-message" title="${formatDatetime(message.createAt)}">
-          <p class="message">${message.content}</p>
+    <!-- Sender Message-->
+    <div class="animated fadeInUp media w-50 mb-3"><i class="far fa-user fa-2x"></i>
+      <div class="media-body ml-3">
+        <div class="bg-light rounded py-2 px-3 mb-2">
+          <p class="text-small mb-0 text-muted">${message.content}</p>
         </div>
-        <div class="clear-float"></div>
+        <p class="small text-muted">${formatDatetime(message.createAt)}</p>
       </div>
     </div>
   `);
   $('#chat-window').scrollTop($('#chat-window')[0].scrollHeight);
 }
-function addIncomeMessage(message) {
+function addOutcomeMessage(message) {
   $('#chat-window').append(`
-    <div class="chatbox__messages income-message animated fadeIn">
-      <div class="chatbox__messages__user-message">
-        <div class="chatbox__messages__user-message--ind-message" title="${formatDatetime(message.createAt)}">
-          <p class="name">${message.createBy}</p>
-          <br />
-          <p class="message">${message.content}</p>
+    <!-- Reciever Message-->
+    <div class="animated fadeInUp media w-50 ml-auto mb-3">
+      <div class="media-body">
+        <div class="bg-primary rounded py-2 px-3 mb-2">
+          <p class="text-small mb-0 text-white">${message.content}</p>
         </div>
-        <div class="clear-float"></div>
+        <p class="small text-muted">${formatDatetime(message.createAt)}</p>
       </div>
-    </div>`);
+    </div>
+  `);
   $('#chat-window').scrollTop($('#chat-window')[0].scrollHeight);
 }
 
 function formatDatetime(d) {
-  return moment(d).format('DD-MM-YYYY HH:mm:ss');
+  return moment(d).format('HH:mm | DD-MM');
 }
 
 async function sendToDB(newMessage) {
@@ -82,12 +81,22 @@ async function sendToDB(newMessage) {
 function addConversations(conversations) {
   $('.chatbox_conversations').html('');
   if (conversations) {
-    for (const c of conversations) {
-      $('.chatbox_conversations').append(`
-      <div class='chatbox__user' ref="${c.id}" onclick="onSelectedConversation('${c.id}');">
-        <p>${c.name}</p>
-      </div>
-      `);
+    for (const [i, c] of conversations.entries()) {
+      setTimeout(() => {
+        $('.chatbox_conversations').append(`
+        <a class="animated fadeInUp list-group-item list-group-item-action list-group-item-light rounded-0" ref="${c.id}" onclick="onSelectedConversation('${c.id}');">
+          <div class="media"><i class="fas fa-users fa-2x"></i>
+            <div class="media-body ml-4">
+              <div class="d-flex align-items-center justify-content-between mb-1">
+                <h6 class="mb-0">${c.name}</h6><small class="small font-weight-bold">25 Dec</small>
+              </div>
+              <p class="font-italic mb-0 text-small">Lorem ipsum dolor sit amet</p>
+            </div>
+          </div>
+        </a>
+        `);
+        activeUIActiveConversation();
+      }, i * 150)
     }
   }
 }
@@ -108,10 +117,11 @@ async function loadConversation() {
           activedConversation = conversations[0];
 
           $('#chat-window').html('');
-          for (let message of activedConversation.messages) {
+          for (let [i, message] of activedConversation.messages.entries()) {
             addMessage(message);
           }
         }
+        addConversations(conversations);
       } else {
         for (const item of snapShot.docChanges()) {
           let c = {
@@ -134,7 +144,6 @@ async function loadConversation() {
           }
         }
       }
-      addConversations(conversations);
       activeUIActiveConversation();
     });
 };
@@ -143,9 +152,9 @@ function onSelectedConversation(id) {
   for (const c of conversations) {
     if (c.id === id) {
       activedConversation = c;
-      reloadConversation();
     }
   }
+  reloadConversation();
   activeUIActiveConversation();
 }
 
@@ -156,11 +165,11 @@ function reloadConversation() {
   }
 }
 
-function activeUIActiveConversation(){
-  $('.chatbox_conversations .chatbox__user').removeClass('active');
-  $(`.chatbox_conversations .chatbox__user[ref="${activedConversation.id}"]`).addClass('active');
+function activeUIActiveConversation() {
+  $('.chatbox_conversations .list-group-item').addClass("list-group-item-light").removeClass('active text-white');
+  $(`.chatbox_conversations .list-group-item[ref="${activedConversation.id}"]`).removeClass("list-group-item-light").addClass('active text-white');
 }
 
-$('.input-message input').focus();
+// $('#frmSendMessage input').focus();
 
 

@@ -15,7 +15,7 @@ $('#form-info').submit(async function (e) {
 
     const loginResult = await firebase.auth().signInWithEmailAndPassword(email, pass);
     if (!loginResult.user.emailVerified) {
-      alert("Please verify your email first");
+      sweetAlertF.error("Please verify your email first!");
       return;
     }
     else {
@@ -24,9 +24,23 @@ $('#form-info').submit(async function (e) {
         displayName: loginResult.user.displayName,
         email: loginResult.user.email,
       }));
-      window.location.href = '../';
+
+      swal({
+        closeOnClickOutside: false,
+        buttons: false  ,
+        title: "Login success!",
+        text: "Redirect after 2s..."
+      });
+      let i = 1;
+      let countDown = setInterval(() => {
+        $('.swal-modal .swal-text').html(`Redirect after ${i--}s...`);
+        if(i < 0) clearInterval(countDown);
+      }, 1000);
+      setTimeout(() => {
+        window.location.href = '../';
+      }, 2000);
     }
   }catch(error){
-    alert(error.message);
+    sweetAlertF.error(error.message);
   }
 })
