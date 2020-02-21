@@ -29,7 +29,8 @@ $('#form-info').submit(async function (e) {
         closeOnClickOutside: false,
         buttons: false  ,
         title: "Login success!",
-        text: "Redirect after 2s..."
+        text: "Redirect after 2s...",
+        icon: "success",
       });
       let i = 1;
       let countDown = setInterval(() => {
