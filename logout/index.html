@@ -34,7 +34,7 @@
     <div style="text-align: center;">Loging out</div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.6.4/lottie.min.js"></script>
-
+  <script src="../userFactory.js"></script>
   <script>
 
     lottie.loadAnimation({
@@ -47,7 +47,7 @@
     });
 
     setTimeout(() => {
-      localStorage.removeItem("currentUser");
+      userFactory.logout();
       window.location.href = '../login';
     }, 2000);
   </script>

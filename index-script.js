@@ -6,8 +6,8 @@ window.onload = () => {
   console.log(firebase.app().name);
 }
 var currentUser, currentUsername;
-if (localStorage.getItem('currentUser')) {
-  currentUser = JSON.parse(localStorage.getItem('currentUser'));
+if (userFactory.isLogin()) {
+  currentUser = userFactory.getUser();
   currentUsername = currentUser.email;
   $('#userDisplayName').html(currentUser.displayName);
   loadConversation();
@@ -40,12 +40,12 @@ function addMessage(message) {
 function addIncomeMessage(message) {
   $('#chat-window').append(`
     <!-- Sender Message-->
-    <div class="animated fadeIn media w-50 mb-3"><i class="far fa-user fa-2x"></i>
+    <div class="animated fadeIn media w-50 mb-3" onclick="showTime(this);"><i class="far fa-user fa-2x"></i>
       <div class="media-body ml-3">
         <div class="bg-light rounded py-2 px-3 mb-2">
           <p class="text-small mb-0 text-muted">${message.content}</p>
         </div>
-        <p class="small text-muted">${formatDatetime(message.createAt)}</p>
+        <p class="create-at small text-muted" style="display:none;">${formatDatetime(message.createAt)}</p>
       </div>
     </div>
   `);
@@ -54,12 +54,12 @@ function addIncomeMessage(message) {
 function addOutcomeMessage(message) {
   $('#chat-window').append(`
     <!-- Reciever Message-->
-    <div class="animated fadeIn media w-50 ml-auto mb-3">
+    <div class="animated fadeIn media w-50 ml-auto mb-3" onclick="showTime(this);">
       <div class="media-body">
         <div class="bg-primary rounded py-2 px-3 mb-2">
           <p class="text-small mb-0 text-white">${message.content}</p>
         </div>
-        <p class="small text-muted">${formatDatetime(message.createAt)}</p>
+        <p class="create-at small text-muted" style="display:none;">${formatDatetime(message.createAt)}</p>
       </div>
     </div>
   `);
@@ -88,7 +88,7 @@ function addConversations(conversations) {
           <div class="media"><i class="fas fa-users fa-2x"></i>
             <div class="media-body ml-4">
               <div class="d-flex align-items-center justify-content-between mb-1">
-                <h6 class="mb-0">${c.name}</h6><small class="small font-weight-bold">25 Dec</small>
+                <h6 class="mb-0">${c.name}</h6><!--<small class="small font-weight-bold">25 Dec</small>-->
               </div>
               <p class="font-italic mb-0 text-small">${c.members.length} member(s)</p>
             </div>
@@ -168,6 +168,10 @@ function reloadConversation() {
 function activeUIActiveConversation() {
   $('.chatbox_conversations .list-group-item').addClass("list-group-item-light").removeClass('active text-white');
   $(`.chatbox_conversations .list-group-item[ref="${activedConversation.id}"]`).removeClass("list-group-item-light").addClass('active text-white');
+}
+
+let showTime = ($this) => {
+  $($this).find('.create-at').slideToggle();
 }
 
 // $('#frmSendMessage input').focus();
