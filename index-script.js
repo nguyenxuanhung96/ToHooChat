@@ -170,6 +170,16 @@ function activeUIActiveConversation() {
   $(`.chatbox_conversations .list-group-item[ref="${activedConversation.id}"]`).removeClass("list-group-item-light").addClass('active text-white');
 }
 
+$('textarea').keyup(function(){
+  var totalHeight = $(this).prop('scrollHeight');// - parseInt($(this).css('padding-top')) - parseInt($(this).css('padding-bottom'));
+  $(this).css({'height':totalHeight});
+  
+}
+);
+
+
+
+
 // $('#frmSendMessage input').focus();
 
 

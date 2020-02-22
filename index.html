@@ -24,11 +24,12 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        
+
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user"></i> Hi <span id="userDisplayName"></span>
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -41,36 +42,43 @@
     </div>
   </nav>
 
-  <div class="container py-5 px-4">
+  <div class="container-fluid main">
     <!-- For demo purpose-->
     <div class="row rounded-lg overflow-hidden shadow">
       <!-- Users box-->
-      <div class="col-sm-0 col-md-3 px-0">
-        <div class="bg-white">
+      <div class="d-sm-block d-none col-3 px-0">
+        <div class="conversation-content">
           <div class="bg-gray px-4 py-2 bg-light">
             <p class="h5 mb-0 py-1">Conversations</p>
           </div>
-          <div class="messages-box">
-            <div class="list-group rounded-0 chatbox_conversations">
-            </div>
+          <div class="messages-box bg-white list-group rounded-0 chatbox_conversations">
           </div>
         </div>
       </div>
       <!-- Chat Box-->
       <div class="col-sm-12 col-md-9 px-0">
-        <div class="px-4 py-5 chat-box bg-white" id="chat-window">
-        </div>
-  
-        <!-- Typing area -->
-        <form id="frmSendMessage" class="bg-light">
-          <div class="input-group">
-            <input type="text" id="inputMessage" autocomplete="off" placeholder="Type a message" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
-            <div class="input-group-append">
-              <button id="button-addon2" type="submit" class="btn btn-link"> <i class="fa fa-paper-plane"></i></button>
+        <div class="message-content">
+          <div class="px-4 chat-box bg-white">
+            <div id="chat-window">
+
             </div>
           </div>
-        </form>
-  
+          <!-- Typing area -->
+          <div class="message-type">
+            <form id="frmSendMessage" class="p-3 bg-light">
+              <div class="input-group">
+                <!-- <div contenteditable="true" type="text" id="inputMessage" autocomplete="off" placeholder="Type a message"
+                aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-2 bg-light">
+              </div> -->
+                <textarea class="form-control" rows="1" placeholder="Type message here..."></textarea>
+                <div class="input-group-append">
+                  <button id="button-addon2" type="submit" class="btn btn-link"> <i
+                      class="fa fa-paper-plane"></i></button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </div>
