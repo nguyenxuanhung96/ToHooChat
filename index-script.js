@@ -10,6 +10,11 @@ if (userFactory.isLogin()) {
   currentUser = userFactory.getUser();
   currentUsername = currentUser.email;
   $('#userDisplayName').html(currentUser.displayName);
+  if (currentUser.photoURL) {
+    $('#avatar').replaceWith(`<img id="avatar" src="${currentUser.photoURL}" width="30" height="30"/>`)
+  } else {
+    $('#avatar').replaceWith(`<i class="fas fa-user" id="avatar"></i>`)
+  }
   loadConversation();
 } else {
   sweetAlertF.error('You need login first!');
@@ -40,9 +45,9 @@ function addMessage(message) {
 function addIncomeMessage(message) {
   $('#chat-window').append(`
     <!-- Sender Message-->
-    <div class="animated fadeIn media w-50 mb-3" onclick="showTime(this);"><i class="far fa-user fa-2x"></i>
+    <div class="animated fadeIn media w-50 mb-3"><i class="far fa-user fa-2x"></i>
       <div class="media-body ml-3">
-        <div class="bg-light rounded py-2 px-3 mb-2">
+        <div class="bg-light rounded py-2 px-3" onclick="showTime(this);">
           <p class="text-small mb-0 text-muted">${message.content}</p>
         </div>
         <p class="create-at small text-muted" style="display:none;">${formatDatetime(message.createAt)}</p>
@@ -54,9 +59,9 @@ function addIncomeMessage(message) {
 function addOutcomeMessage(message) {
   $('#chat-window').append(`
     <!-- Reciever Message-->
-    <div class="animated fadeIn media w-50 ml-auto mb-3" onclick="showTime(this);">
+    <div class="animated fadeIn media w-50 ml-auto mb-3">
       <div class="media-body">
-        <div class="bg-primary rounded py-2 px-3 mb-2">
+        <div class="bg-primary rounded py-2 px-3" onclick="showTime(this);">
           <p class="text-small mb-0 text-white">${message.content}</p>
         </div>
         <p class="create-at small text-muted" style="display:none;">${formatDatetime(message.createAt)}</p>
@@ -156,6 +161,7 @@ function onSelectedConversation(id) {
   }
   reloadConversation();
   activeUIActiveConversation();
+  $('#frmSendMessage input').focus();
 }
 
 function reloadConversation() {
@@ -171,9 +177,8 @@ function activeUIActiveConversation() {
 }
 
 let showTime = ($this) => {
-  $($this).find('.create-at').slideToggle();
+  $($this).closest('.media-body').children('.create-at').slideToggle();
 }
 
-// $('#frmSendMessage input').focus();
 
 

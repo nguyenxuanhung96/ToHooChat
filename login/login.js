@@ -20,11 +20,7 @@ $('#form-info').submit(async function (e) {
     }
     else {
       userFactory.setUser(
-        {
-          uid: loginResult.user.id,
-          displayName: loginResult.user.displayName,
-          email: loginResult.user.email,
-        }
+        loginResult.user
         , remember);
 
       swal({

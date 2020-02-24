@@ -9,6 +9,18 @@ var userFactory = (function () {
   };
   let setUser = (user, remember) => {
     let json = JSON.stringify(user);
+    let u = sessionStorage.getItem(key);
+    if (u) {
+      sessionStorage.setItem(key, json);
+      return true;
+    }
+    else {
+      u = localStorage.getItem(key);
+      if (u) {
+        localStorage.setItem(key, json);
+        return true;
+      }
+    }
     if (remember) {
       localStorage.setItem(key, json);
     } else {
