@@ -2,10 +2,23 @@
 body {
   background-color: #74EBD5;
   background-image: linear-gradient(90deg, #74EBD5 0%, #9FACE6 100%);
-
-  min-height: 100vh;
+  height: 100vh;
+  display: flex;
+  flex-flow: column;
 }
-
+.container-fluid{
+  flex: 1;
+}
+.main-chat{
+  height: 100%;
+}
+.contact-chat{
+  position: relative;
+  height: 100%;
+}
+.title-chat{
+  height: 50px;
+}
 ::-webkit-scrollbar {
   width: 5px;
 }
@@ -26,15 +39,41 @@ body {
   font-size: 0.9rem;
 }
 
-.messages-box,
-.chat-box {
-  height: 72vh;
+.messages-box{
+  overflow: hidden;
+  height: 100%;
+  box-sizing: border-box;
+  padding-top: 50px;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.chatbox_conversations{
+  height: calc(100%);
   overflow-y: scroll;
 }
-.chat-box{
+.chat-box {
+  overflow-y: scroll;
+  height: 100%;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  width: 100%;
   padding-bottom: 6rem !important;
 }
-
+.form-input-message{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  z-index: 1000;
+}
+.form-input-message input{
+  border-bottom-left-radius: 1.3em !important;
+  border-bottom-right-radius: 1.3em !important;
+  border-top-right-radius: 1.3em !important;
+  border-top-left-radius: 1.3em !important;
+  background-color: rgba(0, 0, 0, .05);
+}
 .rounded-lg {
   border-radius: 0.5rem;
 }

@@ -45,17 +45,15 @@
 
   <div class="container-fluid">
     <!-- For demo purpose-->
-    <div class="row rounded-lg overflow-hidden shadow">
+    <div class="row main-chat rounded-lg overflow-hidden shadow">
       <!-- Users box-->
-      <div class="col-sm-0 col-md-3 px-0">
-        <div class="bg-white">
-          <div class="bg-gray px-4 py-2 bg-light">
-            <i class="fas fa-plus-circle" onclick="addNewConversations();"></i>
-            <div class="h5 mb-0 py-1 d-inline-block">Chats</div>
-          </div>
-          <div class="messages-box">
-            <div class="list-group rounded-0 chatbox_conversations">
-            </div>
+      <div class="col-md-3 contact-chat px-0 bg-white d-none d-sm-block">
+        <div class="bg-gray px-4 py-2 bg-light title-chat">
+          <i class="fas fa-plus-circle" onclick="addNewConversations();"></i>
+          <div class="h5 mb-0 py-1 d-inline-block">Chats</div>
+        </div>
+        <div class="messages-box">
+          <div class="rounded-0 chatbox_conversations">
           </div>
         </div>
       </div>
@@ -65,15 +63,18 @@
         </div>
 
         <!-- Typing area -->
-        <form id="frmSendMessage" class="bg-light">
-          <div class="input-group">
-            <input type="text" id="inputMessage" autocomplete="off" placeholder="Type a message"
-              aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
-            <div class="input-group-append">
-              <button id="button-addon2" type="submit" class="btn btn-link"> <i class="fa fa-paper-plane"></i></button>
+        <div class="form-input-message py-2 px-3 bg-white">
+          <form id="frmSendMessage">
+            <div class="input-group">
+              <input type="text" id="inputMessage" autocomplete="off" placeholder="Type a message"
+                aria-describedby="button-addon2" class="form-control border-0 py-4">
+              <div class="input-group-append">
+                <button id="button-addon2" type="submit" class="btn btn-link"> <i
+                    class="fa fa-paper-plane"></i></button>
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   </div>
@@ -100,10 +101,10 @@
               <div class="d-flex">
                 <input type="email" class="form-control" id="inputMembers" autocomplete="off"
                   placeholder="Enter members email">
-                  <div class="p-2">
-                    <i class="fas fa-plus-circle m-auto"
+                <div class="p-2">
+                  <i class="fas fa-plus-circle m-auto"
                     onclick="$('#inputMembers').trigger($.Event('keyup', { keyCode: 13 } ));"></i>
-                  </div>
+                </div>
               </div>
               <div>
                 <span class="text-danger text-small" id="inputMembers-error" style="display: none;">Email not
