@@ -56,3 +56,28 @@ p{
   padding-top: 0;
   padding-bottom: 0;
 }
+.tooltip-content {
+  font-size: 0.85em;
+}
+.toast-top-right{
+  top: 54px;
+}
+.navbar{
+  z-index: 100;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .10);
+}
+.message-income{
+  background-color: #f1f0f0;
+  color: rgba(0, 0, 0, 1);
+}
+.message-content{
+  padding: 6px 12px;
+  border-bottom-left-radius: 1.3em;
+  border-bottom-right-radius: 1.3em;
+  border-top-right-radius: 1.3em;
+  border-top-left-radius: 1.3em;
+}
+.message-outcome{
+  background-color: #0084ff;
+  color: #fff;
+}

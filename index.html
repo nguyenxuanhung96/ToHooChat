@@ -8,6 +8,7 @@
   <link rel="shortcut icon" href="icon.ico" type="image/x-icon">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="venders/fontawesome-free-5.12.1-web/css/all.min.css">
+  <link rel="stylesheet" href="venders/toastr.min.css">
   <link rel="stylesheet" href="animate.css">
   <link rel="stylesheet" href="index-css.css">
 </head>
@@ -24,11 +25,12 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        
+
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user" id="avatar"></i> Hi <span id="userDisplayName"></span>
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -41,14 +43,15 @@
     </div>
   </nav>
 
-  <div class="container py-5 px-4">
+  <div class="container-fluid">
     <!-- For demo purpose-->
     <div class="row rounded-lg overflow-hidden shadow">
       <!-- Users box-->
       <div class="col-sm-0 col-md-3 px-0">
         <div class="bg-white">
           <div class="bg-gray px-4 py-2 bg-light">
-            <p class="h5 mb-0 py-1">Conversations</p>
+            <i class="fas fa-plus-circle" onclick="addNewConversations();"></i>
+            <div class="h5 mb-0 py-1 d-inline-block">Chats</div>
           </div>
           <div class="messages-box">
             <div class="list-group rounded-0 chatbox_conversations">
@@ -60,17 +63,73 @@
       <div class="col-sm-12 col-md-9 px-0">
         <div class="px-4 py-5 chat-box bg-white" id="chat-window">
         </div>
-  
+
         <!-- Typing area -->
         <form id="frmSendMessage" class="bg-light">
           <div class="input-group">
-            <input type="text" id="inputMessage" autocomplete="off" placeholder="Type a message" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
+            <input type="text" id="inputMessage" autocomplete="off" placeholder="Type a message"
+              aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
             <div class="input-group-append">
               <button id="button-addon2" type="submit" class="btn btn-link"> <i class="fa fa-paper-plane"></i></button>
             </div>
           </div>
         </form>
-  
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modalAddNewConversation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form id="frmNewConversation">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">New conversation</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="inputNewConversation">Name conversation</label>
+              <input type="text" required class="form-control" placeholder="Enter name conversation"
+                id="inputNewConversation" autocomplete="off">
+            </div>
+
+            <div class="form-group">
+              <label for="inputMembers">Members</label>
+              <div class="d-flex">
+                <input type="email" class="form-control" id="inputMembers" autocomplete="off"
+                  placeholder="Enter members email">
+                  <div class="p-2">
+                    <i class="fas fa-plus-circle m-auto"
+                    onclick="$('#inputMembers').trigger($.Event('keyup', { keyCode: 13 } ));"></i>
+                  </div>
+              </div>
+              <div>
+                <span class="text-danger text-small" id="inputMembers-error" style="display: none;">Email not
+                  valid</span>
+              </div>
+              <input id="inputMembersList" hidden />
+              <table class="table table-sm mt-2">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Member</th>
+                  </tr>
+                </thead>
+                <tbody id="members-list">
+                </tbody>
+              </table>
+            </div>
+            <div class="form-group text-center">
+              <span class="text-danger text-small" id="newConversation-error" style="display: none;"></span>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Add</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -78,11 +137,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
   <script src="venders/sweetalert.min.js"></script>
+  <script src="venders/toastr.min.js"></script>
   <script src="sweetAlertFactory.js"></script>
   <script src="moment.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
   <script src="initializeFirebase.js"></script>
   <script src="userFactory.js"></script>
+  <script src="firebase-code-error.js"></script>
   <script src="index-script.js"></script>
 </body>
 
