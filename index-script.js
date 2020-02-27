@@ -3,6 +3,7 @@ var conversations;
 var changeConversations = [];
 var activedConversation;
 var currentUser, currentUsername;
+var isFirst = true;
 if (userFactory.isLogin()) {
   currentUser = userFactory.getUser();
   currentUsername = currentUser.email;
@@ -87,39 +88,38 @@ function addConversations(conversations) {
       setTimeout(() => {
         addConversation(c);
         activeUIActiveConversation();
-      }, i * 150);
+      });
     }
   }
 }
 
 function addConversation(c) {
-  $('.chatbox_conversations').append(`
-    <a class="animated fadeInUp list-group-item list-group-item-action list-group-item-light rounded-0" ref="${c.id}" onclick="onSelectedConversation('${c.id}');">
-      <div class="media"><i class="fas fa-users fa-2x"></i>
-        <div class="media-body ml-4">
-          <div class="d-flex align-items-center justify-content-between mb-1">
-            <h6 class="mb-0">${c.name}</h6><!--<small class="small font-weight-bold">25 Dec</small>-->
-          </div>
-          <p class="font-italic mb-0 text-small">${c.members.length} member(s)</p>
-        </div>
-      </div>
-    </a>
-    `);
+  $('.chatbox_conversations').prepend(formatConversationHtml(c));
 }
 
 function modifyConversation(c) {
-  $(`.chatbox_conversations .list-group-item[ref="${c.id}"]`).replaceWith(`
-    <a class="animated list-group-item list-group-item-action list-group-item-light rounded-0" ref="${c.id}" onclick="onSelectedConversation('${c.id}');">
+  $(`.chatbox_conversations .list-group-item[ref="${c.id}"]`).remove();
+  $(`.chatbox_conversations`).prepend(formatConversationHtml(c));
+}
+
+function loadChangeConversation(c) {
+  $(`.chatbox_conversations .list-group-item[ref="${c.id}"]`).remove();
+  $(`.chatbox_conversations`).prepend(formatConversationHtml(c));
+}
+
+function formatConversationHtml(c) {
+  return `
+    <a class="${isFirst ? "animated fadeIn" : ""} list-group-item list-group-item-action list-group-item-light rounded-0" ref="${c.id}" onclick="onSelectedConversation('${c.id}');">
       <div class="media"><i class="fas fa-users fa-2x"></i>
-        <div class="media-body ml-4">
+        <div class="media-body ml-2">
           <div class="d-flex align-items-center justify-content-between mb-1">
             <h6 class="mb-0">${c.name}</h6><!--<small class="small font-weight-bold">25 Dec</small>-->
           </div>
-          <p class="font-italic mb-0 text-small">${c.members.length} member(s)</p>
+          <p class="font-italic mb-0 text-small">${lastMesssage(c.messages)}</p>
         </div>
       </div>
     </a>
-    `);
+  `;
 }
 
 function removeConversation(id) {
@@ -149,19 +149,35 @@ function loadChangeConversations(newConversations) {
   });
 }
 
-function loadChangeConversation(c) {
-  $(`.chatbox_conversations .list-group-item[ref="${c.id}"]`).html(`
-  <a class="animated fadeInUp list-group-item list-group-item-action list-group-item-light rounded-0" ref="${c.id}" onclick="onSelectedConversation('${c.id}');">
-    <div class="media"><i class="fas fa-users fa-2x"></i>
-      <div class="media-body ml-4">
-        <div class="d-flex align-items-center justify-content-between mb-1">
-          <h6 class="mb-0">${c.name}</h6><!--<small class="small font-weight-bold">25 Dec</small>-->
-        </div>
-        <p class="font-italic mb-0 text-small">${c.members.length} member(s)</p>
-      </div>
-    </div>
-  </a>
-  `);
+
+function lastMesssage(messages) {
+  if (messages && messages.length > 0) {
+    let ms = messages[messages.length - 1];
+    let s = ms.content;
+    let createBy = ms.createBy === currentUsername ? 'You: ' : '';
+    let result = `<div class="lastest-message-chat"><span class="lastest-message-chat-content">${createBy}${s}</span>
+    <span class="lastest-message-chat-dot">·</span><span class="lastest-message-chat-time">${formatTimeCreateMesssageOnChat(ms.createAt)}</span></div>`;
+    return result;
+  }
+  return '';
+}
+
+function formatTimeCreateMesssageOnChat(createAt) {
+  const date1 = new Date(createAt);
+  const date2 = new Date();
+  const diffTime = Math.abs(date2 - date1);
+  const diffDays = diffTime / (1000 * 60 * 60 * 24);
+  if (diffDays < 1) {
+    return moment(createAt).format("HH:mm");
+  } else if (diffDays <= 7) {
+    var days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+    return days[date1.getDay()];
+  } else if (diffDays <= 90) {
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return `${date1.getDate()} ${months[date1.getMonth()]}`;
+  } else {
+    return moment(createAt).format("DD/MM/YYYY");
+  }
 }
 
 async function loadConversation() {
@@ -176,8 +192,10 @@ async function loadConversation() {
             ...item.doc.data(),
           };
         });
+
+        sortConversation(conversations);
         if (conversations && conversations.length > 0) {
-          activedConversation = conversations[0];
+          activedConversation = conversations[conversations.length - 1];
 
           $('#chat-window').html('');
           for (let [i, message] of activedConversation.messages.entries()) {
@@ -185,6 +203,7 @@ async function loadConversation() {
           }
         }
         addConversations(conversations);
+        setTimeout(() => isFirst = false, 3000);
       } else {
         let docChange = snapShot.docChanges();
         changeConversations.length = 0;
@@ -194,7 +213,6 @@ async function loadConversation() {
             type: item.type,
             ...item.doc.data(),
           };
-          console.log(item);
           changeConversations.push(c);
           for (let i = 0; i < conversations.length; i++) {
             if (conversations[i].id === c.id) {
@@ -215,6 +233,23 @@ async function loadConversation() {
       activeUIActiveConversation();
     });
 };
+
+function sortConversation(conversations) {
+  conversations.sort((a, b) => {
+    let timeA, timeB;
+    if (a.messages.length === 0) {
+      timeA = a.createAt;
+    } else {
+      timeA = a.messages[a.messages.length - 1].createAt;
+    }
+    if (b.messages.length === 0) {
+      timeB = b.createAt;
+    } else {
+      timeB = b.messages[b.messages.length - 1].createAt;
+    }
+    return new Date(timeA) - new Date(timeB);
+  });
+}
 
 function onSelectedConversation(id) {
   for (const c of conversations) {
@@ -255,8 +290,9 @@ $('#frmNewConversation').submit(function (e) {
   let list = members ? members.split(',') : [];
   if (list.length === 0) {
     $('#newConversation-error').show();
-    $('#newConversation-error').html('Members is required');
+    $('#newConversation-error').html('No contacts here!');
   } else {
+    list.push(currentUsername);
     let newConversation = getNewConversation(name, list);
     const db = firebase.firestore();
     db.collection(db_collection).add(newConversation).then(function (doc) {
@@ -313,8 +349,8 @@ $('#modalAddNewConversation').on('hidden.bs.modal', function (e) {
 });
 
 $('#modalAddNewConversation').on('show.bs.modal', function (e) {
-  $('#frmNewConversation #inputMembersList').val(currentUsername);
-  loadMemberList([currentUsername]);
+  $('#frmNewConversation #inputMembersList').val();
+  loadMemberList([]);
 })
 
 $('body').tooltip({

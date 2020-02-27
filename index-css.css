@@ -18,6 +18,10 @@ body {
 }
 .title-chat{
   height: 50px;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
 }
 ::-webkit-scrollbar {
   width: 5px;
@@ -68,10 +72,10 @@ body {
   z-index: 1000;
 }
 .form-input-message input{
-  border-bottom-left-radius: 1.3em !important;
-  border-bottom-right-radius: 1.3em !important;
-  border-top-right-radius: 1.3em !important;
-  border-top-left-radius: 1.3em !important;
+  border-bottom-left-radius: 1.7em !important;
+  border-bottom-right-radius: 1.7em !important;
+  border-top-right-radius: 1.7em !important;
+  border-top-left-radius: 1.7em !important;
   background-color: rgba(0, 0, 0, .05);
 }
 .rounded-lg {
@@ -119,4 +123,34 @@ p{
 .message-outcome{
   background-color: #0084ff;
   color: #fff;
+}
+.lastest-message-chat{
+  display: flex;
+}
+.list-group-item.active .lastest-message-chat-content,
+.list-group-item.active .lastest-message-chat-time,
+.list-group-item.active .lastest-message-chat-dot
+{
+  color: #fff;
+}
+.lastest-message-chat-content{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre;
+  color: rgba(153, 153, 153, 1);
+  font-size: 13px;
+  font-weight: 400;
+  height: 18px;
+}
+.lastest-message-chat-time{
+  color: rgba(0, 0, 0, .40);
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 400;
+}
+.lastest-message-chat-dot{
+  color: rgba(0, 0, 0, .40);
+  font-size: 13px;
+  margin-left: 4px;
+  margin-right: 4px;
 }
