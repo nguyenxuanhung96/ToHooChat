@@ -154,3 +154,38 @@ p{
   margin-left: 4px;
   margin-right: 4px;
 }
+.chatbox-conversation-mini{
+  overflow: auto;
+  white-space: nowrap;
+}
+.chatbox-conversation-mini:hover::-webkit-scrollbar{
+  width:2px;height:2px;
+  display: unset;
+  
+}
+.chatbox-conversation-mini:hover::-webkit-scrollbar-button{
+  display: unset;
+  width:2px;height:2px;
+}
+.chatbox-conversation-mini::-webkit-scrollbar{
+  display: none;
+}
+.chatbox-conversation-mini::-webkit-scrollbar-button{
+  display: none;
+}
+
+.chatbox-conversation-mini .conversation-items{
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px;
+  text-decoration: none;
+}
+.conversation-items .media{
+  display: block;
+}
+.conversation-items .media span{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre;
+}

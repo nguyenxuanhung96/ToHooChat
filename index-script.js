@@ -42,10 +42,11 @@ function addMessage(message) {
 
 function addIncomeMessage(message) {
   $('#chat-window').append(`
-    <div class="animated fadeIn media mb-3"><i class="far fa-user fa-2x"></i>
+    <div class="animated fadeIn media mb-3">
+      <i class="far fa-user fa-2x" data-toggle="tooltip" data-placement="top" title="${message.createBy}"></i>
       <div class="media-body ml-3">
         <div class="message-content message-income d-inline-block" onclick="showTime(this);"
-          data-toggle="tooltip" data-placement="left" data-html="true" title="<span class='d-none d-sm-block tooltip-content'>${formatDatetime(message.createAt)}</span>">
+          data-toggle="tooltip" data-placement="top" data-html="true" title="<span class='d-none d-sm-block tooltip-content'>${formatDatetime(message.createAt)}</span>">
           <p class="text-small mb-0">${message.content}</p>
         </div>
         <p class="create-at small text-muted d-sm-none" style="display:none;">${formatDatetime(message.createAt)}</p>
@@ -83,18 +84,25 @@ async function sendToDB(newMessage) {
 
 function addConversations(conversations) {
   $('.chatbox_conversations').html('');
+  $('.chatbox-conversation-mini').html('');
   if (conversations) {
     for (const [i, c] of conversations.entries()) {
       setTimeout(() => {
         addConversation(c);
+        addConversationMini(c);
         activeUIActiveConversation();
       });
     }
   }
+
 }
 
 function addConversation(c) {
   $('.chatbox_conversations').prepend(formatConversationHtml(c));
+}
+
+function addConversationMini(c){
+  $('.chatbox-conversation-mini').prepend(formatConversationHtmlMini(c));
 }
 
 function modifyConversation(c) {
@@ -117,6 +125,16 @@ function formatConversationHtml(c) {
           </div>
           <p class="font-italic mb-0 text-small">${lastMesssage(c.messages)}</p>
         </div>
+      </div>
+    </a>
+  `;
+}
+function formatConversationHtmlMini(c) {
+  return `
+    <a  class="${isFirst ? "animated fadeIn" : ""} conversation-items rounded" ref="${c.id}" onclick="onSelectedMiniConversation('${c.id}');">
+      <div class="media">
+        <i class="fas fa-users d-block"></i>
+        <span class="d-block">${c.name}</span>
       </div>
     </a>
   `;
@@ -261,6 +279,15 @@ function onSelectedConversation(id) {
   activeUIActiveConversation();
   $('#frmSendMessage input').focus();
 }
+function onSelectedMiniConversation(id){
+  for (const c of conversations) {
+    if (c.id === id) {
+      activedConversation = c;
+    }
+  }
+  reloadConversation();
+  activeUIActiveConversation();
+}
 
 function reloadConversation() {
   $('#chat-window').html('');
@@ -272,6 +299,8 @@ function reloadConversation() {
 function activeUIActiveConversation() {
   $('.chatbox_conversations .list-group-item').addClass("list-group-item-light").removeClass('active text-white');
   $(`.chatbox_conversations .list-group-item[ref="${activedConversation.id}"]`).removeClass("list-group-item-light").addClass('active text-white');
+  $('.chatbox-conversation-mini .list-group-item').addClass("list-group-item-light").removeClass('active text-white');
+  $(`.chatbox-conversation-mini .list-group-item[ref="${activedConversation.id}"]`).removeClass("list-group-item-light").addClass('active text-white');
 }
 
 let showTime = ($this) => {
@@ -354,7 +383,7 @@ $('#modalAddNewConversation').on('show.bs.modal', function (e) {
 })
 
 $('body').tooltip({
-  selector: '.message-content',
+  selector: '[data-toggle="tooltip"]',
 });
 
 
@@ -367,4 +396,8 @@ let getNewConversation = (name, memberList) => {
     createBy: currentUsername,
   };
   return r;
+}
+
+let getAllContactsInfo = () => {
+
 }
